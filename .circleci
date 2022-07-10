@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+    build:
+        docker:
+            - image: ubuntu:rolling
+        steps:
+            # - run: mkdir artefacts
+            - run: echo 'Hello artefacts!' | tee hello.txt
+            # - run: echo 'Another artefact!' | tee artefacts/save-me-always.txt
+            - run: exit 0
+            - run:
+                  command: mv hello.txt -t artefacts
+                  when: on_fail
+            - store_artifacts:
+                  path: artefacts
